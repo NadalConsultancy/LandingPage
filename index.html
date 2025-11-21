@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nadal Consultancy | SAP Solutions & AI Automation</title>
+    <meta name="description" content="Expert SAP Implementation, Clean Core strategies, and AI Automation services.">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS (via CDN for static usage) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Tailwind Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            800: '#075985',
+                            900: '#0c4a6e',
+                            950: '#082f49',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Icons (Lucide) -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 5px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+        /* Glass Effect */
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+        
+        /* Animation Utilities */
+        .fade-in { animation: fadeIn 0.5s ease-in; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    </style>
+</head>
+<body class="antialiased text-slate-800 bg-white">
+
+    <!-- Navbar -->
+    <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-transparent py-5">
+        <div class="container mx-auto px-6 md:px-12 flex items-center justify-between">
+            <!-- Logo (Image + Text) -->
+            <a href="#" id="nav-brand-wrapper" class="flex items-center gap-3 z-50 transition-colors duration-300 text-white group">
+                
+                <!-- LOGO WHITE: Shown on dark backgrounds (Hero section) -->
+                <!-- IMPORTANT: Save your white logo version as 'logo-white.png' in the same folder -->
+                <img src="logo-white.png" alt="Nadal Consultancy" id="logo-white" class="h-10 w-auto object-contain transition-opacity duration-300">
+                
+                <!-- LOGO ORIGINAL: Shown on light backgrounds (Scrolled / Mobile Menu) -->
+                <img src="logo.png" alt="Nadal Consultancy" id="logo-dark" class="h-10 w-auto object-contain transition-opacity duration-300 hidden">
+                
+                <span class="text-xl md:text-2xl font-bold tracking-tight">
+                    Nadal Consultancy
+                </span>
+            </a>
+
+            <!-- Desktop Menu -->
+            <div class="hidden md:flex items-center gap-8">
+                <a href="#home" class="nav-link text-sm font-medium text-white hover:text-brand-200 transition-colors duration-200" data-i18n="nav.home">Home</a>
+                <a href="#services" class="nav-link text-sm font-medium text-white hover:text-brand-200 transition-colors duration-200" data-i18n="nav.services">Services</a>
+                <a href="#about" class="nav-link text-sm font-medium text-white hover:text-brand-200 transition-colors duration-200" data-i18n="nav.about">About</a>
+                <a href="#contact" class="nav-link text-sm font-medium text-white hover:text-brand-200 transition-colors duration-200" data-i18n="nav.contact">Contact</a>
+                
+                <button onclick="toggleLanguage()" id="lang-btn-desktop" class="flex items-center gap-1 px-3 py-1.5 rounded-full text-xs font-semibold tracking-wide transition-all bg-white/10 text-white hover:bg-white/20 backdrop-blur-sm">
+                    <i data-lucide="globe" class="w-3.5 h-3.5"></i>
+                    <span id="current-lang-text">EN</span>
+                </button>
+            </div>
+
+            <!-- Mobile Toggle -->
+            <button class="md:hidden z-50 p-2 transition-colors duration-300 text-white focus:outline-none" id="mobile-toggle" aria-label="Toggle Menu">
+                <span id="icon-menu" class="block"><i data-lucide="menu" class="w-8 h-8"></i></span>
+                <span id="icon-close" class="hidden"><i data-lucide="x" class="w-8 h-8"></i></span>
+            </button>
+
+            <!-- Mobile Menu Overlay -->
+            <div id="mobile-menu" class="fixed inset-0 bg-white z-40 flex flex-col pt-28 px-8 transition-transform duration-300 ease-in-out translate-x-full md:hidden h-screen overflow-y-auto">
+                <a href="#home" class="mobile-link text-2xl font-bold text-slate-900 py-6 border-b border-slate-100 w-full" onclick="closeMobileMenu()" data-i18n="nav.home">Home</a>
+                <a href="#services" class="mobile-link text-2xl font-bold text-slate-900 py-6 border-b border-slate-100 w-full" onclick="closeMobileMenu()" data-i18n="nav.services">Services</a>
+                <a href="#about" class="mobile-link text-2xl font-bold text-slate-900 py-6 border-b border-slate-100 w-full" onclick="closeMobileMenu()" data-i18n="nav.about">About</a>
+                <a href="#contact" class="mobile-link text-2xl font-bold text-slate-900 py-6 border-b border-slate-100 w-full" onclick="closeMobileMenu()" data-i18n="nav.contact">Contact</a>
+                
+                <button onclick="toggleLanguage(); closeMobileMenu();" class="mt-8 flex items-center gap-3 text-brand-600 font-bold py-4 text-lg">
+                    <i data-lucide="globe" class="w-6 h-6"></i>
+                    <span id="mobile-lang-text">Switch Language</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="relative min-h-screen flex items-center pt-20 overflow-hidden bg-brand-950">
+        <!-- Background Elements -->
+        <div class="absolute inset-0 z-0">
+            <div class="absolute top-[-10%] right-[-5%] w-[500px] h-[500px] bg-brand-600 rounded-full mix-blend-screen filter blur-[128px] opacity-20 animate-pulse"></div>
+            <div class="absolute bottom-[-10%] left-[-10%] w-[600px] h-[600px] bg-teal-600 rounded-full mix-blend-screen filter blur-[128px] opacity-20"></div>
+            <div class="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20"></div>
+            <div class="absolute inset-0" style="background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.05) 1px, transparent 0); background-size: 40px 40px;"></div>
+        </div>
+
+        <div class="container mx-auto px-6 md:px-12 relative z-10">
+            <div class="max-w-4xl mx-auto text-center">
+                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-brand-900/50 border border-brand-700/50 text-brand-100 text-sm font-medium mb-8 backdrop-blur-sm">
+                    <span class="relative flex h-2 w-2">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-400 opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-2 w-2 bg-brand-500"></span>
+                    </span>
+                    <span data-i18n="hero.badge">Innovating Enterprise Resource Planning</span>
+                </div>
+
+                <h1 class="text-4xl md:text-6xl lg:text-7xl font-bold text-white tracking-tight leading-tight mb-6" data-i18n="hero.title">
+                    SAP Excellence Meets AI Innovation
+                </h1>
+                
+                <p class="text-lg md:text-xl text-slate-300 mb-10 max-w-2xl mx-auto leading-relaxed" data-i18n="hero.subtitle">
+                    Nadal Consultancy specializes in robust SAP implementations, Clean Core strategies, and cutting-edge AI automations to future-proof your business.
+                </p>
+
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                    <a href="#contact" class="group relative w-full sm:w-auto px-8 py-4 bg-brand-600 hover:bg-brand-500 text-white font-semibold rounded-lg transition-all duration-200 flex items-center justify-center gap-2 shadow-lg shadow-brand-900/50">
+                        <span data-i18n="hero.ctaPrimary">Schedule a Consultation</span>
+                        <i data-lucide="arrow-right" class="w-5 h-5 group-hover:translate-x-1 transition-transform"></i>
+                    </a>
+                    <a href="#services" class="w-full sm:w-auto px-8 py-4 bg-white/5 hover:bg-white/10 text-white font-semibold rounded-lg border border-white/10 transition-all duration-200 backdrop-blur-sm flex items-center justify-center gap-2">
+                        <span data-i18n="hero.ctaSecondary">Explore Services</span>
+                        <i data-lucide="chevron-right" class="w-5 h-5"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scroll Indicator -->
+        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce text-slate-400">
+            <div class="w-6 h-10 border-2 border-slate-400 rounded-full flex justify-center">
+                <div class="w-1 h-2 bg-slate-400 rounded-full mt-2"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-24 bg-slate-50">
+        <div class="container mx-auto px-6 md:px-12">
+            <div class="max-w-3xl mx-auto text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mb-4" data-i18n="services.sectionTitle">Our Expertise</h2>
+                <p class="text-slate-600 text-lg" data-i18n="services.sectionSubtitle">Comprehensive solutions tailored to modernize your enterprise architecture and streamline operations.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Service 1 -->
+                <div class="group bg-white p-8 rounded-2xl border border-slate-100 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
+                    <div class="mb-6 p-4 bg-slate-50 rounded-xl inline-block group-hover:bg-brand-50 transition-colors">
+                        <i data-lucide="database" class="w-8 h-8 text-brand-500"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-3 group-hover:text-brand-600 transition-colors" data-i18n="services.items.consulting.title">Specialized SAP Consulting</h3>
+                    <p class="text-slate-600 leading-relaxed mb-6" data-i18n="services.items.consulting.description">
+                        End-to-end implementation and support tailored to your unique business processes, ensuring minimal disruption and maximum ROI.
+                    </p>
+                    <a href="#contact" class="inline-flex items-center text-brand-600 font-semibold text-sm hover:text-brand-700">
+                        <span data-i18n="services.learnMore">Learn more</span> <i data-lucide="arrow-up-right" class="w-4 h-4 ml-1"></i>
+                    </a>
+                </div>
+
+                <!-- Service 2 -->
+                <div class="group bg-white p-8 rounded-2xl border border-slate-100 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
+                    <div class="mb-6 p-4 bg-slate-50 rounded-xl inline-block group-hover:bg-brand-50 transition-colors">
+                        <i data-lucide="cpu" class="w-8 h-8 text-teal-500"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-3 group-hover:text-brand-600 transition-colors" data-i18n="services.items.cleanCore.title">Clean Core Strategy</h3>
+                    <p class="text-slate-600 leading-relaxed mb-6" data-i18n="services.items.cleanCore.description">
+                        Keep your SAP environment upgrade-ready. We help you decouple customizations to ensure agility and long-term compliance.
+                    </p>
+                    <a href="#contact" class="inline-flex items-center text-brand-600 font-semibold text-sm hover:text-brand-700">
+                        <span data-i18n="services.learnMore">Learn more</span> <i data-lucide="arrow-up-right" class="w-4 h-4 ml-1"></i>
+                    </a>
+                </div>
+
+                <!-- Service 3 -->
+                <div class="group bg-white p-8 rounded-2xl border border-slate-100 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
+                    <div class="mb-6 p-4 bg-slate-50 rounded-xl inline-block group-hover:bg-brand-50 transition-colors">
+                        <i data-lucide="bot" class="w-8 h-8 text-purple-500"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-3 group-hover:text-brand-600 transition-colors" data-i18n="services.items.ai.title">AI & Process Automation</h3>
+                    <p class="text-slate-600 leading-relaxed mb-6" data-i18n="services.items.ai.description">
+                        Leverage the power of SAP BTP and Generative AI to automate repetitive tasks and gain predictive insights.
+                    </p>
+                    <a href="#contact" class="inline-flex items-center text-brand-600 font-semibold text-sm hover:text-brand-700">
+                        <span data-i18n="services.learnMore">Learn more</span> <i data-lucide="arrow-up-right" class="w-4 h-4 ml-1"></i>
+                    </a>
+                </div>
+
+                <!-- Service 4 -->
+                <div class="group bg-white p-8 rounded-2xl border border-slate-100 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
+                    <div class="mb-6 p-4 bg-slate-50 rounded-xl inline-block group-hover:bg-brand-50 transition-colors">
+                        <i data-lucide="cloud" class="w-8 h-8 text-orange-500"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-3 group-hover:text-brand-600 transition-colors" data-i18n="services.items.cloud.title">Cloud Migration</h3>
+                    <p class="text-slate-600 leading-relaxed mb-6" data-i18n="services.items.cloud.description">
+                        Secure and efficient migration strategies to move your legacy systems to SAP S/4HANA Cloud.
+                    </p>
+                    <a href="#contact" class="inline-flex items-center text-brand-600 font-semibold text-sm hover:text-brand-700">
+                        <span data-i18n="services.learnMore">Learn more</span> <i data-lucide="arrow-up-right" class="w-4 h-4 ml-1"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-24 bg-white overflow-hidden">
+        <div class="container mx-auto px-6 md:px-12">
+            <div class="flex flex-col lg:flex-row items-center gap-16">
+                <!-- Image / Visual Side -->
+                <div class="w-full lg:w-1/2 relative">
+                    <div class="aspect-[4/3] rounded-2xl overflow-hidden relative shadow-2xl">
+                        <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="Corporate Office" class="object-cover w-full h-full hover:scale-105 transition-transform duration-700">
+                        <div class="absolute inset-0 bg-brand-900/20"></div>
+                    </div>
+                    <!-- Decorative boxes -->
+                    <div class="hidden md:block absolute -bottom-10 -right-10 w-48 h-48 bg-brand-50 rounded-full -z-10"></div>
+                    <div class="hidden md:block absolute -top-10 -left-10 w-32 h-32 border-2 border-brand-100 rounded-full -z-10"></div>
+                </div>
+
+                <!-- Content Side -->
+                <div class="w-full lg:w-1/2">
+                    <div class="flex items-center gap-2 mb-4">
+                        <span class="h-px w-8 bg-brand-600"></span>
+                        <span class="text-brand-600 font-semibold uppercase tracking-wider text-sm">About Us</span>
+                    </div>
+                    
+                    <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mb-6" data-i18n="about.title">
+                        Why Choose Nadal Consultancy?
+                    </h2>
+                    
+                    <p class="text-slate-600 text-lg leading-relaxed mb-6" data-i18n="about.description1">
+                        We are more than just technical implementers; we are strategic partners in your digital transformation journey. With a deep understanding of both legacy SAP ECC and modern S/4HANA landscapes, we bridge the gap between stability and innovation.
+                    </p>
+                    
+                    <p class="text-slate-600 text-lg leading-relaxed mb-10" data-i18n="about.description2">
+                        Our boutique approach ensures you receive senior-level attention, agile execution, and solutions that are built to last.
+                    </p>
+
+                    <div class="grid grid-cols-3 gap-8 border-t border-slate-100 pt-8">
+                        <div>
+                            <div class="text-3xl md:text-4xl font-bold text-brand-600 mb-1" data-i18n="about.stats.years">10+</div>
+                            <div class="text-sm text-slate-500 font-medium" data-i18n="about.statsLabels.years">Years Experience</div>
+                        </div>
+                        <div>
+                            <div class="text-3xl md:text-4xl font-bold text-brand-600 mb-1" data-i18n="about.stats.projects">50+</div>
+                            <div class="text-sm text-slate-500 font-medium" data-i18n="about.statsLabels.projects">Projects Delivered</div>
+                        </div>
+                        <div>
+                            <div class="text-3xl md:text-4xl font-bold text-brand-600 mb-1" data-i18n="about.stats.clients">100%</div>
+                            <div class="text-sm text-slate-500 font-medium" data-i18n="about.statsLabels.clients">Client Satisfaction</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-24 bg-brand-950 text-white relative">
+        <!-- Background Pattern -->
+        <div class="absolute inset-0 opacity-5" style="background-image: radial-gradient(#ffffff 1px, transparent 1px); background-size: 30px 30px;"></div>
+
+        <div class="container mx-auto px-6 md:px-12 relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-center">
+                <div>
+                    <h2 class="text-3xl md:text-4xl font-bold mb-6" data-i18n="contact.title">Ready to Transform?</h2>
+                    <p class="text-slate-300 text-lg mb-12 max-w-md" data-i18n="contact.subtitle">Let's discuss how we can optimize your SAP landscape today.</p>
+                    
+                    <div class="space-y-8">
+                        <div class="flex items-start gap-4">
+                            <div class="bg-brand-800/50 p-3 rounded-lg border border-brand-700/50">
+                                <i data-lucide="mail" class="w-6 h-6 text-brand-400"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-sm font-semibold text-slate-400 mb-1 uppercase tracking-wide" data-i18n="contact.emailLabel">Email Us</h4>
+                                <a href="mailto:contact@nadalconsultancy.com" class="text-xl font-medium hover:text-brand-400 transition-colors">contact@nadalconsultancy.com</a>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-4">
+                            <div class="bg-brand-800/50 p-3 rounded-lg border border-brand-700/50">
+                                <i data-lucide="phone" class="w-6 h-6 text-brand-400"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-sm font-semibold text-slate-400 mb-1 uppercase tracking-wide" data-i18n="contact.phoneLabel">Call Us</h4>
+                                <a href="tel:+5511987654321" class="text-xl font-medium hover:text-brand-400 transition-colors">+55 (11) 98765-4321</a>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-4">
+                            <div class="bg-brand-800/50 p-3 rounded-lg border border-brand-700/50">
+                                <i data-lucide="map-pin" class="w-6 h-6 text-brand-400"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-sm font-semibold text-slate-400 mb-1 uppercase tracking-wide" data-i18n="contact.locationLabel">Headquarters</h4>
+                                <p class="text-xl font-medium">São Bernardo do Campo, SP<br/>Brazil</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-2xl p-8 md:p-10 text-slate-800 shadow-2xl">
+                    <h3 class="text-2xl font-bold mb-6 text-brand-950" data-i18n="contact.ctaButton">Get in Touch</h3>
+                    <form class="space-y-4" onsubmit="event.preventDefault()">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="space-y-2">
+                                <label class="text-sm font-medium text-slate-600">Name</label>
+                                <input type="text" class="w-full px-4 py-3 rounded-lg bg-slate-50 border border-slate-200 focus:border-brand-500 focus:ring-2 focus:ring-brand-200 outline-none transition-all" placeholder="John Doe">
+                            </div>
+                            <div class="space-y-2">
+                                <label class="text-sm font-medium text-slate-600">Company</label>
+                                <input type="text" class="w-full px-4 py-3 rounded-lg bg-slate-50 border border-slate-200 focus:border-brand-500 focus:ring-2 focus:ring-brand-200 outline-none transition-all" placeholder="Business Corp">
+                            </div>
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-sm font-medium text-slate-600">Email</label>
+                            <input type="email" class="w-full px-4 py-3 rounded-lg bg-slate-50 border border-slate-200 focus:border-brand-500 focus:ring-2 focus:ring-brand-200 outline-none transition-all" placeholder="john@example.com">
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-sm font-medium text-slate-600">Message</label>
+                            <textarea rows="4" class="w-full px-4 py-3 rounded-lg bg-slate-50 border border-slate-200 focus:border-brand-500 focus:ring-2 focus:ring-brand-200 outline-none transition-all resize-none" placeholder="Tell us about your project..."></textarea>
+                        </div>
+                        <button type="submit" class="w-full py-4 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-lg shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-1">
+                            Send Message
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-slate-300 py-12 border-t border-slate-800">
+        <div class="container mx-auto px-6 md:px-12">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 mb-12">
+                <!-- Brand -->
+                <div>
+                    <div class="flex items-center gap-2 mb-6">
+                        <!-- Small Logo in Footer (Always use white/bright version logic here) -->
+                        <img src="logo-white.png" alt="Nadal Consultancy" class="h-12 w-auto object-contain">
+                        <span class="text-2xl font-bold tracking-tight text-white">
+                            Nadal Consultancy
+                        </span>
+                    </div>
+                    <p class="text-slate-400 leading-relaxed mb-6" data-i18n="footer.companyDescription">
+                        Nadal Consultancy delivers world-class SAP implementation and AI automation services for the modern enterprise.
+                    </p>
+                    <div class="flex gap-4">
+                        <a href="https://linkedin.com/company/nadalconsultancy" class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center hover:bg-brand-600 hover:text-white transition-all">
+                            <i data-lucide="linkedin" class="w-5 h-5"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center hover:bg-brand-600 hover:text-white transition-all">
+                            <i data-lucide="github" class="w-5 h-5"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Links -->
+                <div class="md:text-right">
+                    <h4 class="text-white font-bold text-lg mb-6" data-i18n="footer.quickLinks">Quick Links</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#home" class="hover:text-brand-400 transition-colors" data-i18n="nav.home">Home</a></li>
+                        <li><a href="#services" class="hover:text-brand-400 transition-colors" data-i18n="nav.services">Services</a></li>
+                        <li><a href="#about" class="hover:text-brand-400 transition-colors" data-i18n="nav.about">About</a></li>
+                        <li><a href="#contact" class="hover:text-brand-400 transition-colors" data-i18n="nav.contact">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="border-t border-slate-800 pt-8 text-center text-sm text-slate-500">
+                <p data-i18n="footer.copyright">© 2025 Nadal Consultancy. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Logic Script -->
+    <script>
+        // --- Data & Translations ---
+        const translations = {
+            en: {
+                nav: {
+                    home: "Home",
+                    services: "Services",
+                    about: "About",
+                    contact: "Contact",
+                },
+                hero: {
+                    badge: "Innovating Enterprise Resource Planning",
+                    title: "SAP Excellence Meets AI Innovation",
+                    subtitle: "Nadal Consultancy specializes in robust SAP implementations, Clean Core strategies, and cutting-edge AI automations to future-proof your business.",
+                    ctaPrimary: "Schedule a Consultation",
+                    ctaSecondary: "Explore Services",
+                },
+                services: {
+                    sectionTitle: "Our Expertise",
+                    sectionSubtitle: "Comprehensive solutions tailored to modernize your enterprise architecture and streamline operations.",
+                    learnMore: "Learn more",
+                    items: {
+                        consulting: { title: "Specialized SAP Consulting", description: "End-to-end implementation and support tailored to your unique business processes, ensuring minimal disruption and maximum ROI." },
+                        cleanCore: { title: "Clean Core Strategy", description: "Keep your SAP environment upgrade-ready. We help you decouple customizations to ensure agility and long-term compliance." },
+                        ai: { title: "AI & Process Automation", description: "Leverage the power of SAP BTP and Generative AI to automate repetitive tasks and gain predictive insights." },
+                        cloud: { title: "Cloud Migration", description: "Secure and efficient migration strategies to move your legacy systems to SAP S/4HANA Cloud." }
+                    }
+                },
+                about: {
+                    title: "Why Choose Nadal Consultancy?",
+                    description1: "We are more than just technical implementers; we are strategic partners in your digital transformation journey. With a deep understanding of both legacy SAP ECC and modern S/4HANA landscapes, we bridge the gap between stability and innovation.",
+                    description2: "Our boutique approach ensures you receive senior-level attention, agile execution, and solutions that are built to last.",
+                    stats: { years: "10+", projects: "50+", clients: "100%" },
+                    statsLabels: { years: "Years Experience", projects: "Projects Delivered", clients: "Client Satisfaction" }
+                },
+                contact: {
+                    title: "Ready to Transform?",
+                    subtitle: "Let's discuss how we can optimize your SAP landscape today.",
+                    emailLabel: "Email Us",
+                    phoneLabel: "Call Us",
+                    locationLabel: "Headquarters",
+                    ctaButton: "Get in Touch"
+                },
+                footer: {
+                    companyDescription: "Nadal Consultancy delivers world-class SAP implementation and AI automation services for the modern enterprise.",
+                    quickLinks: "Quick Links",
+                    copyright: "© 2025 Nadal Consultancy. All rights reserved."
+                }
+            },
+            pt: {
+                nav: {
+                    home: "Início",
+                    services: "Serviços",
+                    about: "Sobre",
+                    contact: "Contato",
+                },
+                hero: {
+                    badge: "Inovando o Planejamento de Recursos Empresariais",
+                    title: "Excelência SAP com Inovação em IA",
+                    subtitle: "A Nadal Consultancy é especializada em implementações SAP robustas, estratégias Clean Core e automações de IA de ponta para preparar seu negócio para o futuro.",
+                    ctaPrimary: "Agendar Consultoria",
+                    ctaSecondary: "Explorar Serviços",
+                },
+                services: {
+                    sectionTitle: "Nossa Expertise",
+                    sectionSubtitle: "Soluções abrangentes personalizadas para modernizar sua arquitetura empresarial e otimizar operações.",
+                    learnMore: "Saiba mais",
+                    items: {
+                        consulting: { title: "Consultoria SAP Especializada", description: "Implementação e suporte ponta a ponta adaptados aos seus processos de negócio, garantindo interrupção mínima e ROI máximo." },
+                        cleanCore: { title: "Estratégia Clean Core", description: "Mantenha seu ambiente SAP pronto para atualizações. Ajudamos a desacoplar customizações para garantir agilidade e conformidade." },
+                        ai: { title: "IA e Automação de Processos", description: "Aproveite o poder do SAP BTP e IA Generativa para automatizar tarefas repetitivas e obter insights preditivos." },
+                        cloud: { title: "Migração para Nuvem", description: "Estratégias de migração seguras e eficientes para mover seus sistemas legados para o SAP S/4HANA Cloud." }
+                    }
+                },
+                about: {
+                    title: "Por que escolher a Nadal Consultancy?",
+                    description1: "Somos mais do que apenas implementadores técnicos; somos parceiros estratégicos em sua jornada de transformação digital. Com profundo entendimento tanto do SAP ECC legado quanto dos ambientes modernos S/4HANA, unimos estabilidade e inovação.",
+                    description2: "Nossa abordagem boutique garante que você receba atenção de nível sênior, execução ágil e soluções construídas para durar.",
+                    stats: { years: "10+", projects: "50+", clients: "100%" },
+                    statsLabels: { years: "Anos de Experiência", projects: "Projetos Entregues", clients: "Satisfação do Cliente" }
+                },
+                contact: {
+                    title: "Pronto para Transformar?",
+                    subtitle: "Vamos discutir como podemos otimizar seu cenário SAP hoje.",
+                    emailLabel: "Envie um Email",
+                    phoneLabel: "Ligue para Nós",
+                    locationLabel: "Sede",
+                    ctaButton: "Entre em Contato"
+                },
+                footer: {
+                    companyDescription: "A Nadal Consultancy oferece serviços de implementação SAP e automação de IA de classe mundial para a empresa moderna.",
+                    quickLinks: "Links Rápidos",
+                    copyright: "© 2025 Nadal Consultancy. Todos os direitos reservados."
+                }
+            }
+        };
+
+        let currentLang = 'en';
+
+        // --- Helper: Get nested object property by string path ---
+        function getNestedValue(obj, path) {
+            return path.split('.').reduce((prev, curr) => prev ? prev[curr] : null, obj);
+        }
+
+        // --- Function to update all text on page ---
+        function updateContent() {
+            const content = translations[currentLang];
+            
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                const value = getNestedValue(content, key);
+                if (value) {
+                    el.innerText = value;
+                }
+            });
+
+            // Update Toggle Buttons text
+            const nextLang = currentLang === 'en' ? 'PT' : 'EN';
+            const nextLangFull = currentLang === 'en' ? 'Português' : 'English';
+            
+            document.getElementById('current-lang-text').innerText = currentLang.toUpperCase();
+            document.getElementById('mobile-lang-text').innerText = `Switch to ${nextLangFull}`;
+        }
+
+        // --- Interaction Functions ---
+        function toggleLanguage() {
+            currentLang = currentLang === 'en' ? 'pt' : 'en';
+            updateContent();
+        }
+
+        // --- Mobile Menu Logic ---
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileToggleBtn = document.getElementById('mobile-toggle');
+        const iconMenu = document.getElementById('icon-menu');
+        const iconClose = document.getElementById('icon-close');
+        
+        let isMobileMenuOpen = false;
+
+        function toggleMobileMenu() {
+            isMobileMenuOpen = !isMobileMenuOpen;
+            updateNavVisuals(); // Force update to handle button color
+            
+            if (isMobileMenuOpen) {
+                // Open Menu
+                mobileMenu.classList.remove('translate-x-full');
+                mobileMenu.classList.add('translate-x-0');
+                
+                // Switch Icon
+                iconMenu.classList.add('hidden');
+                iconMenu.classList.remove('block');
+                iconClose.classList.remove('hidden');
+                iconClose.classList.add('block');
+
+                // Lock Body Scroll
+                document.body.style.overflow = 'hidden';
+            } else {
+                // Close Menu
+                mobileMenu.classList.add('translate-x-full');
+                mobileMenu.classList.remove('translate-x-0');
+                
+                // Switch Icon
+                iconMenu.classList.remove('hidden');
+                iconMenu.classList.add('block');
+                iconClose.classList.add('hidden');
+                iconClose.classList.remove('block');
+
+                // Unlock Body Scroll
+                document.body.style.overflow = '';
+            }
+        }
+
+        function closeMobileMenu() {
+            if (!isMobileMenuOpen) return;
+            toggleMobileMenu(); // Reuse toggle logic to close cleanly
+        }
+
+        mobileToggleBtn.addEventListener('click', toggleMobileMenu);
+
+        // --- Navbar & Visuals Logic ---
+        const navbar = document.getElementById('navbar');
+        const logoWrapper = document.getElementById('nav-brand-wrapper');
+        const logoWhite = document.getElementById('logo-white');
+        const logoDark = document.getElementById('logo-dark');
+        const navLinks = document.querySelectorAll('.nav-link');
+        const langBtn = document.getElementById('lang-btn-desktop');
+
+        function updateNavVisuals() {
+            const isScrolled = window.scrollY > 20;
+            
+            // Background Logic
+            if (isScrolled) {
+                navbar.classList.add('glass-nav', 'py-3', 'shadow-sm');
+                navbar.classList.remove('bg-transparent', 'py-5');
+            } else {
+                navbar.classList.remove('glass-nav', 'py-3', 'shadow-sm');
+                navbar.classList.add('bg-transparent', 'py-5');
+            }
+
+            // Color Logic
+            // If Menu is Open OR Scrolled -> Dark Theme (Original Logo Colors)
+            // If Menu is Closed AND Top -> Light Theme (White Logo)
+            const useDarkTheme = isScrolled || isMobileMenuOpen;
+
+            if (useDarkTheme) {
+                // Dark Colors (Text Dark, Logo Original/Dark)
+                logoWrapper.classList.remove('text-white');
+                logoWrapper.classList.add('text-slate-900');
+
+                // Swap Images
+                logoWhite.classList.add('hidden');
+                logoDark.classList.remove('hidden');
+
+                mobileToggleBtn.classList.remove('text-white');
+                mobileToggleBtn.classList.add('text-slate-900');
+                
+                langBtn.classList.remove('bg-white/10', 'text-white');
+                langBtn.classList.add('bg-slate-100', 'text-slate-600', 'hover:bg-slate-200');
+
+                navLinks.forEach(link => {
+                    link.classList.remove('text-white', 'hover:text-brand-200');
+                    link.classList.add('text-slate-700', 'hover:text-brand-600');
+                });
+            } else {
+                // Light Colors (Text White, Logo White)
+                logoWrapper.classList.add('text-white');
+                logoWrapper.classList.remove('text-slate-900');
+
+                // Swap Images
+                logoWhite.classList.remove('hidden');
+                logoDark.classList.add('hidden');
+
+                mobileToggleBtn.classList.add('text-white');
+                mobileToggleBtn.classList.remove('text-slate-900');
+
+                langBtn.classList.add('bg-white/10', 'text-white');
+                langBtn.classList.remove('bg-slate-100', 'text-slate-600', 'hover:bg-slate-200');
+
+                navLinks.forEach(link => {
+                    link.classList.add('text-white', 'hover:text-brand-200');
+                    link.classList.remove('text-slate-700', 'hover:text-brand-600');
+                });
+            }
+        }
+
+        window.addEventListener('scroll', updateNavVisuals);
+
+        // --- Initialization ---
+        // Initialize Icons
+        lucide.createIcons();
+        // Initialize Text
+        updateContent();
+    </script>
+</body>
+</html>
